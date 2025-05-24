@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Liste des Datasets</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<h2>Liste des Datasets</h2>
+<table border="1">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Nom</th>
+    <th>Description</th>
+    <th>Date de création</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="dataset : ${datasets}">
+    <td th:text="${dataset.id}">ID</td>
+    <td th:text="${dataset.nomDataset}">Nom</td>
+    <td th:text="${dataset.description}">Description</td>
+    <td th:text="${#dates.format(dataset.createdAt, 'yyyy-MM-dd HH:mm:ss')}">Date</td>
+  </tr>
+  </tbody>
+</table>
+
+<h3>Créer un nouveau dataset</h3>
+<form th:action="@{/admin/createDataset}" th:object="${newDataset}" method="post">
+  <div>
+    <label>Nom du dataset :</label>
+    <input type="text" th:field="*{nomDataset}" placeholder="Nom du dataset" required />
+  </div>
+  <div>
+    <label>Description :</label>
+    <textarea th:field="*{description}" placeholder="Description" required></textarea>
+  </div>
+  <button type="submit">Créer</button>
+</form>
+
+<h3>Créer un nouvel annotateur</h3>
+<form th:action="@{/admin/createUser}" th:object="${newUser}" method="post">
+  <div>
+    <label>Nom d'utilisateur :</label>
+    <input type="text" th:field="*{username}" placeholder="Nom d'utilisateur" required />
+  </div>
+  <div>
+    <label>Prénom :</label>
+    <input type="text" th:field="*{prenom}" placeholder="Prénom" required />
+  </div>
+  <div>
+    <label>Mot de passe :</label>
+    <input type="password" th:field="*{password}" placeholder="Mot de passe" required />
+  </div>
+  <button type="submit">Créer</button>
+</form>
+<a th:href="@{/logout}">Déconnexion</a>
+</body>
+</html>
